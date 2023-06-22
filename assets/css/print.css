@@ -1,0 +1,270 @@
+#printable .expense_modal {
+    width: 21cm;
+    height: 29.7cm;
+    position: relative;
+}
+#printable {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: table !important;
+}
+#printable .expense_modal {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+#printable .expense_modal .table {
+    border-color: #c1c1c1 !important;
+    max-width: 100% !important;
+}
+#printable .expense_modal .table {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    color: #212529 !important;
+    vertical-align: top !important;
+    border-color: #dee2e6 !important;
+    print-color-adjust: exact !important;
+}
+#printable .expense_modal table {
+    caption-side: bottom !important;
+    border-collapse: collapse !important;
+}
+#printable .expense_modal .table tr td {
+    border-color: #c1c1c1 !important;
+    color: #525252 !important;
+    padding: 0.8rem 0.6rem !important;
+    print-color-adjust: exact !important;
+}
+#printable .expense_modal .text-end {
+    text-align: right !important;
+}
+#printable .date_section {
+    display: block !important;
+}
+#printable .expense_modal .text-success {
+    color: #198754 !important;
+    print-color-adjust: exact !important;
+    display: block !important;
+}
+#printable .expense_modal strong {
+    font-weight: bolder !important;
+}
+#printable .expense_modal .table tr th {
+    color: #252525 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    print-color-adjust: exact !important;
+}
+#printable .expense_modal .table.table-striped > tbody > tr:nth-of-type(odd) > * {
+    color: #363535 !important;
+    print-color-adjust: exact !important;
+}
+
+
+
+/*=================TEST RESULT=================*/
+
+#printables .modal_head{
+    text-align: center;
+}
+#printables .patient_details .col-md-6{
+    display: inline-flex;
+    float: left;
+    width: 50%;
+}
+#printables .personal_details .col-md-5, #printable .personal_details .col-md-7 {
+    display: inline-block;
+    float: left;
+}
+#printable .personal_details .col-md-5{
+    width: 41.66666667%;
+}
+#printable .personal_details .col-md-7{
+    width: 58.33333333%;
+}
+#printables .clinic_details .col-md-5, #printable .clinic_details .col-md-7 {
+    display: inline-block;
+    float: left;
+}
+#printables .clinic_details .col-md-5{
+    width: 41.66666667%;
+}
+#printables .clinic_details .col-md-7{
+    width: 58.33333333%;
+}
+#printables .sub_head{
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+#printables .table {
+    border-color: #c1c1c1;
+}
+#printables .table.card-table tr td:first-child, #printables .table.card-table tr th:first-child {
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-left: 0;
+}
+#printables .table.card-table thead tr th {
+    border-top: 1px dashed #c1c1c1;
+}
+#printables .table.card-table tr td, #printables .table.card-table tr th {
+    vertical-align: middle;
+    white-space: nowrap;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-right: 0;
+    border-bottom: 1px dashed #c1c1c1;
+    border-left: 1px dashed #c1c1c1;
+}
+#printables .table tr th {
+    color: #252525;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+#printables .table.card-table tbody {
+    border-top: none;
+}
+#printables .table.card-table tr:last-child td {
+    border-bottom: 0;
+}
+#printables .end_command{
+    text-align: center;
+    width: 100%;
+}
+
+
+/*=================INVOICE LIST=================*/
+
+#printable_invoice {
+    width: 100%;
+    font-size: 13px;
+}
+#printable_invoice .logo_section{
+    width: 100%;
+    display: inline-flex !important;
+}
+#printable_invoice .logo_section .col-md-6{
+    width: 50%;
+    float: left;
+}
+#printable_invoice .logo_section h3{
+    font-size: 1.25rem;
+}
+#printable_invoice .logo_section h5{
+    font-size: .75rem;
+}
+#printable_invoice .logo_section .col-md-6 .text-end{
+    text-align: right;
+    float:right;
+}
+#printable_invoice .patient_details .col-md-6{
+    width: 50%;
+    float: left;
+}
+#printable_invoice .green_text {
+    color: #11b396;
+}
+#printable_invoice .row .col-md-6{
+    width: 50%;
+    float: left;
+}
+#printable_invoice .row .text-end{
+    text-align: right;
+}
+#printable_invoice .row .col-md-4{
+    width: 33.33333333%;
+    float: left;
+    margin-bottom: 10px;
+}
+#printable_invoice .row .text-center{
+    text-align:center;
+}
+#printable_invoice .row .text-end{
+    text-align: right;
+}
+#printable_invoice .invoice_table{
+    width: 100%;
+    margin-top: 10px;
+}
+#printable_invoice .invoice_table table{
+    width: 100%;
+    border-color: #c1c1c1;
+}
+#printable_invoice .table.card-table tr td:first-child, #printable_invoice .table.card-table tr th:first-child {
+    border-radius: 0.25rem 0 0 0.25rem !important;
+    border-left: 0 !important;
+}
+#printable_invoice .table.card-table thead tr th {
+    border-top: 1px dashed #c1c1c1;
+}
+#printable_invoice .table.card-table tr td, #printable_invoice .table.card-table tr th {
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    border-right: 0 !important;
+    border-bottom: 1px dashed #c1c1c1 !important;
+    border-left: 1px dashed #c1c1c1 !important;
+}
+#printable_invoice .table tr th {
+    color: #252525;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+#printable_invoice .invoice_table th, #printable_invoice .invoice_table td {
+    text-align: center !important;
+}
+#printable_invoice .table.card-table tr:last-child td {
+    border-bottom: 0 !important;
+}
+#printable_invoice .tabel_bottom{
+    display: inline-flex;
+    width: 100%;
+    margin-top: 2rem;
+}
+#printable_invoice .tabel_bottom .col-md-3, #printable_invoice .total_section .col-md-3{
+    width: 25%;
+    float: left;
+    padding-right: 15px;
+}
+#printable_invoice .tabel_bottom .col-md-9, #printable_invoice .total_section .col-md-9{
+    width: 75%;
+    float: left;
+    padding-right: 15px;
+}
+#printable_invoice .tabel_bottom .col-md-3 .qr_code{
+    text-align: right;
+}
+#printable_invoice .tabel_bottom .col-md-3 .qr_code img{
+    width: 40%;
+}
+#printable_invoice .total_section{
+    display: inline-flex;
+    width: 100%;
+    margin-top: 1rem;
+}
+#printable_invoice hr{
+    height: 2px !important;
+    margin: 1rem 0;
+    color: #464545;
+}
+#printable_invoice .login_detail_section{
+    display:inline-flex; 
+    width:100%;
+}
+#printable_invoice .login_detail_section h6{
+    color: #181818;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-top:0;
+}
+#printable_invoice .login_detail_section1{
+    display:inline-flex; 
+    width:100%;
+}
+#printable_invoice .login_detail_section1 .col-md-3{
+    width: 25%;
+    float:left;
+}

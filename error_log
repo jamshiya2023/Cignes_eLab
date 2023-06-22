@@ -1,0 +1,8 @@
+
+[15-May-2023 06:33:26 UTC] PHP Fatal error:  Cannot use Illuminate\Support\Facades\Mail as Mail because the name is already in use in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/ForgotPasswordController.php on line 11
+[18-May-2023 12:25:16 UTC] PHP Fatal error:  Cannot use App\Models\Testresult as Testresult because the name is already in use in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/RejectReasonController.php on line 10
+[18-May-2023 15:02:47 UTC] PHP Fatal error:  Cannot use App\Models\Normalrange as Normalrange because the name is already in use in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/TestController.php on line 18
+[19-May-2023 08:38:45 UTC] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/TestController.php on line 4
+[19-May-2023 08:39:06 UTC] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/TestController.php on line 2
+[27-May-2023 11:42:52 UTC] PHP Fatal error:  Cannot use Illuminate\Support\Facades\DB as DB because the name is already in use in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/RegistrationController.php on line 26
+[15-Jun-2023 06:43:44 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 98570240 bytes) in /home/alnashic/elab.apitgroup.com/app/Http/Controllers/IncomeCategoryController.php on line 48
