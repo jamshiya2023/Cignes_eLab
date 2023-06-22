@@ -16,20 +16,20 @@ class ClientsController extends Controller
 {
    public function showMasterClientTestPrice()
     {
-             
+
     if(Auth::check()){
              $singletest = AllTests::where('status','=',1)
             ->where('testtype','singletest')
-            ->get();  
-            $profiletest = AllTests::select('*')->where('status','=',1)->where('testtype','=','profiletest')->get();     
+            ->get();
+            $profiletest = AllTests::select('*')->where('status','=',1)->where('testtype','=','profiletest')->get();
             return view('master_clients_prices', ['tests' => $singletest,'profile_test' =>$profiletest]);
         }
-    
+
     return redirect("/")->withError('You do not have access');
-    
-           
+
+
     }
-    
+
     public function showUpdatePricesForm($clientId)
     {
         $client = Client::findOrFail($clientId);
@@ -39,7 +39,7 @@ class ClientsController extends Controller
         })
         ->select('alltests.id', 'alltests.testname', 'alltests.primaryprice', 'client_test_price.price','client_test_price.id as price_id')
         ->get();
-        
+
         return view('master_clients_prices', compact('client', 'tests'));
     }
     public function updatePrices(Request $request)
@@ -51,11 +51,11 @@ class ClientsController extends Controller
             try {
                     if(empty($id))
                     {
-                        
+
                         if (empty($clientPrice)) {
                             $clientPrice = $request->original_price;
                         }
-                    
+
                         $clients_price              = new ClientTestPrice;
                         $clients_price->client_id   = $request->cid;
                         $clients_price->alltests_id = $request->sid;
@@ -72,28 +72,86 @@ class ClientsController extends Controller
                         $clients_price->updated_at  = $currentTime;
                         $clients_price->update();
                     }
-                
+
                     // Success message or further actions
                 }
-                catch (\Illuminate\Database\QueryException $exception) 
+                catch (\Illuminate\Database\QueryException $exception)
                 {
-                    
+
                     return response()->json(['status'=>false,'id' => $cid,'message' =>"Duplicate entry not possible"]);
                 }
-        
+
         return response()->json(['status'=>true,'id' => $cid]);
     }
     public function updatePricesAll(Request $request)
     {
         $data = $request->input('data');
-        foreach ($data as $row) {
-            $id = $row['id'];
-            $testname = $row['testname'];
-            $originalPrice = $row['originalPrice'];
-            $clientPrice = $row['clientPrice'];
-            $clientPriceId = $row['clientPriceId'];
-            $cid =$row['cid'];
-        }
+
+        $currentTime = Carbon::now();
+
+            foreach ($data as $row)
+            {
+                try {
+
+                $cid =$row['cid'];
+                $testid =$row['id'];
+                $checkvalue = ClientTestPrice::where('client_id','=',$cid)
+                    ->where('alltests_id',$testid)
+                    ->first();
+
+                if(!empty($checkvalue))
+                {
+                    return response()->json(['status'=>false,'id' => $cid,'message' =>" You already updated the client price with the original price."]);
+                }
+
+                if(empty($row['clientPriceId']))
+                {
+                    if(empty($row['clientPrice']))
+                    {
+                        $clientPrice =$row['originalPrice'];
+                    }
+                    else
+                    {
+                        $clientPrice =$row['clientPrice'];
+                    }
+                        $clients_price              = new ClientTestPrice;
+                        $clients_price->client_id   = $row['cid'];
+                        $clients_price->alltests_id = $row['id'];
+                        $clients_price->price       = !empty($clientPrice)?$clientPrice:'0';
+                        $clients_price->updated_at  = $currentTime;
+                        $clients_price->save();
+                }
+                else
+                {
+                    if(empty($row['clientPrice']))
+                    {
+                        $clientPrice =$row['originalPrice'];
+                    }
+                    else
+                    {
+                        $clientPrice =$row['clientPrice'];
+                    }
+
+                        $clients_price              = ClientTestPrice::find($row['clientPriceId']);
+                        $clients_price->client_id   = $row['cid'];
+                        $clients_price->alltests_id = $row['id'];
+                        $clients_price->price       = !empty($clientPrice)?$clientPrice:'0';
+                        $clients_price->updated_at  = $currentTime;
+                        $clients_price->update();
+
+                }
+            }
+            catch (\Illuminate\Database\QueryException $exception)
+                {
+
+                    return response()->json(['status'=>false,'id' => $cid,'message' =>"Duplicate entry not possible"]);
+                }
+
+            }
+
+
+        return response()->json(['status'=>true,'id' => $cid]);
+
     }
     public function viewclients()
     {
@@ -103,14 +161,14 @@ class ClientsController extends Controller
            // dd($clientss);
             return view('master_clients', ['clients' => $clientss]);
         }
-    
+
     return redirect("/")->withError('You do not have access');
     }
-    
+
     public function addclients(Request $request)
 
     {
-      
+
         try {
             $clients = new Client;
             $clients->name = $request->name;
@@ -120,7 +178,7 @@ class ClientsController extends Controller
             $clients->phone_code = $request->country_code;
             $clients->status = '1';
             $clients->save();
-        
+
             return redirect('master-clients')->with('Clientsuccess', "Client added successfully");
         } catch (QueryException $e) {
             if ($e->errorInfo[1] === 1062) {
@@ -133,7 +191,7 @@ class ClientsController extends Controller
                 return redirect()->back()->with('Clienterror', 'An error occurred while adding the client.');
             }
         }
-    
+
     }
     public function editClientview(Request $request)
     {
@@ -143,11 +201,11 @@ class ClientsController extends Controller
                   ->first();
                   return Response($clients);
     }
-    
+
     public function clientedit(Request $request){
         $id = $request->input('hiddenid');
         $clients=Client::find($id);
-        
+
         $clients->name=$request->input('clientnameedit');
         $clients->name_arabic=$request->input('arabic_nameedit');
         $clients->email=$request->input('email_edit');
@@ -164,7 +222,7 @@ class ClientsController extends Controller
          return redirect("master-clients")->with('Clientsuccess', "Client blocked successfully");
     }
     public function unblockClient(Request $request,$id)
-    {   
+    {
          $clients= Client::find($id);
          $clients->status = '1';
          $clients->update();
