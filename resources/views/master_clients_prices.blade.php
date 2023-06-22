@@ -81,16 +81,16 @@
     }
     </style>
     <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">-->
-    
+
      <!-- start: page body -->
         <div class="page-body px-xl-4 px-sm-2 px-0 py-lg-2 py-1 mt-3">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
             	<div class="row">
                 	<!-- COL 3 STARTS HERE -->
-                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">                   		
+                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                         <div class="row">
                             @include('layout.sidemenu')
-                        </div>                                            
+                        </div>
                     </div>
                     <!-- COL 3 ENDS HERE -->
                     <!--COL 9 STARTS HERE -->
@@ -98,28 +98,30 @@
                         <div class="row g-2 row-deck">
                             <div class="col-xl-12">
                                 <div class="card">
+                                    <form id="updateForm">
                                     <div class="card-header">
                                         <h6 class="card-title m-0">Update Test Price</h6>
+                                        <h5> <button type="submit" id="updateAllButton" class="btn btn-primary">UniPricing</button></h5>
                                     </div>
                                     <div class="card-body">
-                                        <form id="updateForm">
+
                                         <table id="updatetestprice" class="table card-table table-hover align-middle mb-1 mt-0">
                                             <thead>
-                                                
+
                                                 <tr>
                                                     <th style="width:10px;">#</th>
                                                    <th style="width:200px;" class="text-center">Test Name</th>
                                                    <th style="width:50px;" class="text-center">Original Price</th>
                                                    <th style="width:50px;" class="text-center">Client Price</th>
-                                                   <th style="width:50px;" class="text-center"><button type="submit" class="btn btn-primary">update All</button></th>
+                                                   <th style="width:50px;" class="text-center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php $count=1; @endphp
-                                               
+
                                                 @foreach($tests as $data)
-                                               
-                                                <tr> 
+
+                                                <tr>
                                                     <td>{{$count++}}</td>
                                                     <td>
                                                         <input type="hidden" class="form-control form-control-lg" value="{{$data->id}}" name="testid" id="testid">
@@ -130,7 +132,7 @@
                                                         <input type="text" class="form-control form-control-lg" value="{{$data->primaryprice}}" name="originalPrice_{{$data->id}}" id="originalPrice_{{$data->id}}">
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control form-control-lg" value="{{$data->price}}" name="clientPrice_{{$data->id}}" id="clientPrice_{{$data->id}}">
+                                                        <input type="text" class="form-control form-control-lg" value="{{$data->price}}" name="clientPrice_{{$data->id}}" id="clientPrice_{{$data->id}}" onchange="updateValue(this)">
                                                         <input type="hidden" class="form-control form-control-lg" value="{{$data->price_id}}" name="clientPriceId_{{$data->id}}" id="clientPriceId_{{$data->id}}">
                                                     </td>
                                                     <td style="text-align: center;">
@@ -138,13 +140,14 @@
                                                     </td>
                                                 </tr>
                                                  @endforeach
-                                                
+
                                             </tbody>
                                         </table>
-                                        </form>
+
                                     </div>
+                                </form>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,7 +163,7 @@
             });
         });
     </script>
-   
+
 
 <script>
 $(document).ready(function() {
@@ -179,13 +182,13 @@ $(document).ready(function() {
                 var pageRows = pageHtml.find('tbody tr');
 
                 pageRows.each(function(index) {
-                    var row = $(this);
-                    var id = row.find('input[name^="testid"]').val();
-                    var cid = row.find('input[name^="clientid"]').val();
-                    var testname = row.find('input[name^="testname"]').val();
-                    var originalPrice = row.find('input[name^="originalPrice"]').val();
-                    var clientPrice = row.find('input[name^="clientPrice"]').val();
-                    var clientPriceId = row.find('input[name^="clientPriceId"]').val();
+                var row = $(this);
+                var id = row.find('input[name^="testid"]').val();
+                var cid = row.find('input[name^="clientid"]').val();
+                var testname = row.find('input[name^="testname"]').val();
+                var originalPrice = row.find('input[name^="originalPrice"]').val();
+                var clientPrice = row.find('input[name^="clientPrice"]').val();
+                var clientPriceId = row.find('input[name^="clientPriceId"]').val();
 
                     data.push({
                         id: id,
@@ -195,8 +198,9 @@ $(document).ready(function() {
                         clientPrice: clientPrice,
                         clientPriceId: clientPriceId
                     });
-                });
 
+                });
+ console.log(data);
                 // Check if there are more pages to collect data from
                 var nextPageLink = pageHtml.find('.pagination li.active').next().find('a');
                 if (nextPageLink.length > 0) {
@@ -216,7 +220,7 @@ $(document).ready(function() {
     // Function to send the collected data to the server
     function sendDataToServer() {
         $.ajax({
-             url:"{{ route('update-prices_all.submit') }}", 
+             url:"{{ route('update-prices_all.submit') }}",
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -227,9 +231,11 @@ $(document).ready(function() {
                  if(response.status === true)
                {
                     var id = response.id;
-                
+                    localStorage.setItem("hideUpdateButton", "true");
                     // Refresh the page with the specific ID
+
                     window.location.href = "{{ url('update_test_prices') }}/" + id;
+
                 }
                 else
                 {
@@ -241,6 +247,7 @@ $(document).ready(function() {
             }
         });
     }
+
 
     // Handle form submission
     $('#updateForm').submit(function(e) {
@@ -255,8 +262,17 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+    function updateValue(input) {
+      var newValue = input.value; // Get the new value entered by the user
+      // Perform any additional logic or processing if needed
+      console.log("New value:", newValue);
+      // Update the input field value (optional)
+      input.value = newValue;
+    }
+  </script>
     <script>
-    
+
     function UpdateClientPrice(sid,cid)
 {
   var sid                   = sid;
@@ -267,7 +283,7 @@ $(document).ready(function() {
   var client_price          = document.getElementById("clientPrice_"+sid).value;
   var client_price_id       = document.getElementById("clientPriceId_"+sid).value;
 
- 
+
        var updatePrice = new FormData();
         updatePrice.append('_token',CSRF_TOKEN);
         updatePrice.append('test_name',test_name);
@@ -276,9 +292,9 @@ $(document).ready(function() {
         updatePrice.append('cid',cid);
         updatePrice.append('sid',sid);
         updatePrice.append('client_price_id',client_price_id);
-        
+
          $.ajax({
-           url:"{{ route('update-prices.submit') }}", 
+           url:"{{ route('update-prices.submit') }}",
            method: 'POST',
            data: updatePrice,
            contentType: false,
@@ -289,7 +305,7 @@ $(document).ready(function() {
                if(response.status === true)
                {
                var id = response.id;
-                
+
         // Refresh the page with the specific ID
         window.location.href = "{{ url('update_test_prices') }}/" + id;
            }
@@ -298,7 +314,7 @@ $(document).ready(function() {
                swal(""+response.message+"");
            }
            }
-           
+
 
            });
 }
